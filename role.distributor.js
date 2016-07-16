@@ -3,11 +3,19 @@ var parent = require('bot')
 var roleDistributor = {
     run: function(creep) {
         parent.run(creep);
-        if(creep.carry.energy < creep.carryCapacity) {
+
+        if(!creep.memory.collecting && creep.carry.energy == 0) {
+            creep.memory.collecting = true;
+	    }
+	    if(creep.memory.collecting && creep.carry.energy == creep.carryCapacity) {
+	        creep.memory.collecting = false;
+	    }
+
+        if(creep.memory.collecting) {
     		var containers = creep.room.find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_CONTAINER }});
         	if(containers.length) {
         		var index = 0;
-        		while(containers[index].store[RESOURCE_ENERGY] < 50 || index<containers.length-1) { index++; }
+        		while(containers[index].store[RESOURCE_ENERGY] < 50 && index<containers.length-1) { index++; }
         		if(creep.withdraw(containers[index], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         			creep.moveTo(containers[index]);
         		}
@@ -19,7 +27,8 @@ var roleDistributor = {
 	                }
 	            }
 	        }
-        } else {
+        } 
+        if(!creep.memory.collecting) {
             if(creep.memory.targetID != undefined) {
                 var target = Game.getObjectById(creep.memory.targetID);
                 if(target.energy == target.energyCapacity) {
@@ -43,6 +52,7 @@ var roleDistributor = {
                 	targets[0] = creep.room.storage;
                 }
                 creep.memory.targetID = targets[0].id;
+                roleDistributor.run(creep);
             }
         }
     }
