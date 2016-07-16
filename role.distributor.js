@@ -7,7 +7,7 @@ var roleDistributor = {
             var drops = creep.room.find(FIND_DROPPED_ENERGY);
             if(drops.length) {
                 if(creep.pickup(drops[0])==ERR_NOT_IN_RANGE) {
-                    creep.moveTo(drops[0]);
+                    creep.moveTo(drops[0], {ignoreRoads: true});//carriers move the same speed on and off road, speed up the search
                 }
             }
         } else {
@@ -18,7 +18,7 @@ var roleDistributor = {
                     roleDistributor.run(creep);
                 }
                 if(creep.transfer(target, RESOURCE_ENERGY)==ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+                    creep.moveTo(target, {ignoreRoads: true});
                 }
             } else {
                 var targets = creep.room.find(FIND_STRUCTURES, {
