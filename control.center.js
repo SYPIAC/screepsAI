@@ -2,30 +2,39 @@
 
 //buildOrderStep descriptions:
 //undefined - starting the game
-//0 - building starting units, waiting for the controller upgrade
-//1 - waiting for extensions to be built
-//2 - extensions built, replace harvesters with one mega harvester + mega distributor
+//0 - build starting units, put down roads, wait for the controller upgrade to lvl2
+//3 - ??
 var spawnControl = require('spawn.control');
 var bodies = spawnControl.bodies;
 
 var controlCenter = {
     run: function() {
-        if(Memory.buildOrderStep == undefined) {
-            Memory.buildOrderStep = 0;
-            controlCenter.startGame();
+        switch(Memory.buildOrderStep) {
+            case undefined:
+                Memory.buildOrderStep = 0;
+                controlCenter.startGame();
+                break;
+            case 0:
+                if(spawnControl.queue == []) {
+                    //TODO:build some roads(to nearest source and controller)
+                }
+                if(Game.spawns.Spawn1.room.controller.level == 2) {
+                    Memory.buildOrderStep = 1;
+                    //TODO:put down extensions
+                }
+            case 1:
+                if(Game.spawns.Spawn1.room.energyCapacityAvailable >= 500) {
+                    Memory.buildOrderStep = 2;
+                    //TODO:suicide all the small harvesters
+                    //TODO:make it so there's one big harvester per node
+                    //TODO:build roads over swamps on the way to sources
+                    spawnControl.build('harvester', 5);
+                    //TODO:figure out the best distributor/carrier for the harvester
+                }
+            case 2:
+                //TODO:figure out what the fuck to do
+                break;
         }
-        if(Memory.buildOrderStep == 0) {
-            if(spawnControl.queue == []) {
-                //Game.spawns.Spawn1.room.createConstructionSite(x,y, STRUCTURE_CONTAINER);//build a container under the harvester
-            }
-            if(Game.spawns.Spawn1.room.controller.level == 2) {
-                Memory.buildOrderStep = 1;
-                //put down extensions
-            }
-        }
-        //controlCenter.buildBiggest('distributor');
-        //Game.spawns.Spawn1.room.energyCapacityAvailable == 500
-        //TODO: build the extensions automatically
     },
 
     startGame: function() {
