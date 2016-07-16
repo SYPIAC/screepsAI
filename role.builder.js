@@ -42,7 +42,10 @@ var roleBuilder = {
                     creep.moveTo(spawn[0]);
                 }
 	        } else {
-    	        var sources = creep.room.find(FIND_SOURCES);
+                var sources = creep.room.find(FIND_SOURCES);
+                sources = _.sortBy(sources, function(x) {
+                    return creep.pos.getRangeTo(x.pos);
+                });
                 if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[0]);
                 }

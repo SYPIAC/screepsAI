@@ -1,4 +1,5 @@
 //TODO:make all the stuff be room-independent
+//TODO:split distributors into carriers and distributors, try to maintain the perfect carrier number
 
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');

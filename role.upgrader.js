@@ -20,12 +20,15 @@ var roleUpgrader = {
         }
         else {
             var spawn = creep.room.find(FIND_MY_SPAWNS);
-	        if(spawn[0].energy > 2 && Memory.queue.length == 0) {
+	        if(spawn[0].energy > 2 && Memory.queue.length == 0) {//don't take spawn energy if there's something building
     	        if(spawn[0].transferEnergy(creep) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(spawn[0]);
                 }
             } else { 
                 var sources = creep.room.find(FIND_SOURCES);
+                sources = _.sortBy(sources, function(x) {
+                    return creep.pos.getRangeTo(x.pos);
+                });
                 if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[0]);
                 }
