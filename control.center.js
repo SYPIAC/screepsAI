@@ -3,6 +3,8 @@
 //buildOrderStep descriptions:
 //undefined - starting the game
 //0 - build starting units, put down roads, wait for the controller upgrade to lvl2
+//1 - wait for 500 energy capacity, then build the biggest useful harvester
+//2 - try to gather 100% energy in the room
 //3 - ??
 var spawnControl = require('spawn.control');
 var bodies = spawnControl.bodies;
