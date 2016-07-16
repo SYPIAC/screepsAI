@@ -32,13 +32,6 @@ var roleBuilder = {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0]);
                 }
-            } else {//repair if nothing to build
-                var closestDamagedStructure = creep.pos.findClosestByRange(FIND_STRUCTURES, {
-                    filter: (structure) => structure.hits < structure.hitsMax
-                });
-                if(closestDamagedStructure) {
-                    creep.repair(closestDamagedStructure);
-                }
             }
 	    }
 	    else {
