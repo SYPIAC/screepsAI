@@ -13,7 +13,7 @@ var roleDistributor = {
         } else {
             if(creep.memory.targetID != undefined) {
                 var target = Game.getObjectById(creep.memory.targetID);
-                if(target.energyAvailable == target.energyCapacity) {
+                if(target.energy == target.energyCapacity) {
                     creep.memory.targetID = undefined;
                     roleDistributor.run(creep);
                 }
