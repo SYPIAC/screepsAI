@@ -41,8 +41,8 @@ var roleDistributor = {
             } else {
                 var targets = creep.room.find(FIND_STRUCTURES, {
                         filter: (structure) => {
-                            return (structure.structureType == STRUCTURE_EXTENSION ||
-                                    structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity;
+                            return ((structure.structureType == STRUCTURE_EXTENSION ||
+                                    structure.structureType == STRUCTURE_SPAWN) && structure.energy < structure.energyCapacity);
                         }
                 });
                 targets = _.sortBy(targets, function(x) {

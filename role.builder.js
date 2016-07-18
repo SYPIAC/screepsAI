@@ -5,19 +5,19 @@ var roleBuilder = {
     /** @param {Creep} creep **/
     run: function(creep) {
         parent.run(creep);
-        // var tower = Game.getObjectById('08a9c29f9c649ef68a9458ff');
-        // if(tower) {
+        var tower = Game.getObjectById('577eccc893766cff0eb640d5');
+        if(tower) {
         //     var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
         //         filter: (structure) => structure.hits < structure.hitsMax
         //     });
         //     if(closestDamagedStructure) {
         //         tower.repair(closestDamagedStructure);
         //     }
-        //     var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        //     if(closestHostile) {
-        //         tower.attack(closestHostile);
-        //     }
-        // }
+            var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+            if(closestHostile) {
+                tower.attack(closestHostile);
+            }
+        }
         
 	    if(creep.memory.building && creep.carry.energy == 0) {
             creep.memory.building = false;
