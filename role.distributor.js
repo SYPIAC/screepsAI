@@ -12,12 +12,17 @@ var roleDistributor = {
 	    }
 
         if(creep.memory.collecting) {
-    		var containers = creep.room.find(FIND_STRUCTURES, { filter: { structureType: STRUCTURE_CONTAINER }});
+    		var containers = creep.room.find(FIND_STRUCTURES, { filter: (structure) => {
+                             return structure.structureType == STRUCTURE_CONTAINER
+                  					&& structure.store[RESOURCE_ENERGY] > 50;
+                        }
+            });
+    		targets = _.sortBy(targets, function(x) {
+            	return creep.pos.getRangeTo(x.pos);
+            });
         	if(containers.length) {
-        		var index = 0;
-        		while(containers[index].store[RESOURCE_ENERGY] < 50 && index<containers.length-1) { index++; }
-        		if(creep.withdraw(containers[index], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        			creep.moveTo(containers[index]);
+        		if(creep.withdraw(containers[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        			creep.moveTo(containers[0]);
         		}
         	} else {
 	            var drops = creep.room.find(FIND_DROPPED_ENERGY);
